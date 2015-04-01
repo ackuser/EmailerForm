@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <!-- CSS -->
+    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.3/css/bootstrap.min.css" />
+    <style>
+        body     { padding-top:30px; }
+    </style>
+
+    <!-- JS -->
+    <script src="http://code.angularjs.org/1.2.6/angular.js"></script>
+    <script src="app.js"></script>
+</head>
+<body ng-app="validationApp" ng-controller="mainController">
+<div class="container">
+
+    <!-- PAGE HEADER -->
+    <div class="page-header"><h1>AngularJS Form Validation</h1></div>
+
+    <!-- =================================================================== -->
+    <!-- FORM ============================================================== -->
+    <!-- =================================================================== -->
+
+    <!-- pass in the variable if our form is valid or invalid -->
+    <form name="userForm" ng-submit="submitForm(userForm.$valid)" method="POST" novalidate>
+
+        <!-- FROM -->
+        <div class="form-group" ng-class="{ 'has-error' : userForm.from.$invalid && !userForm.from.$pristine }" required>
+            <label>From*:</label>
+            <input type="email" name="from" class="form-control" ng-model="mail.from" placeholder="sender@email.com" onfocus="this.placeholder=''" onblur="this.placeholder='sender@email.com'" value="sender@email.com" required>
+            <!-- onblur="this.placeholder='sender@email.com'" -->
+
+            <p ng-show="userForm.from.$invalid && !userForm.from.$pristine" class="help-block">Enter a valid email.</p>
+        </div>
+
+        <!-- TO -->
+        <div class="form-group" ng-class="{ 'has-error' : userForm.to.$invalid && !userForm.to.$pristine }" required>
+            <label>To*:</label>
+            <input type="email" name="to" class="form-control" ng-model="mail.to" placeholder="receiver@email.com"  onfocus="this.placeholder=''" onblur="this.placeholder='receiver@email.com'" value="receiver@email.com" required>
+            <p ng-show="userForm.to.$invalid && !userForm.to.$pristine" class="help-block">Enter a valid email.</p>
+        </div>
+
+        <!-- SUBJECT -->
+        <div class="form-group" ng-class="{ 'has-error' : userForm.subject.$invalid && !userForm.subject.$pristine }">
+            <label>Subject*:</label>
+            <input type="text" name="subject" class="form-control" ng-model="mail.subject" ng-minlength="3" ng-maxlength="8" placeholder="subject" onfocus="this.placeholder=''" onblur="this.placeholder='subject'" value="subject" required>
+            <p ng-show="userForm.subject.$error.minlength" class="help-block">Subject is too short.</p>
+            <p ng-show="userForm.subject.$error.maxlength" class="help-block">Subject is too long.</p>
+
+        </div>
+
+        <!-- BODY -->
+        <div class="form-group" ng-class="{ 'has-error' : userForm.body.$invalid && !userForm.body.$pristine }">
+            <label>Body:</label>
+            <textarea name="body" rows="4" cols="50" class="form-control" ng-minlength="3" ng-maxlength="100" ng-model="mail.body" placeholder="default Value" value="default"></textarea>
+            <p ng-show="userForm.body.$error.minlength" class="help-block">Body is too short.</p>
+            <p ng-show="userForm.body.$error.maxlength" class="help-block">Body is too long.</p>
+        </div>
+
+        <button type="submit" class="btn btn-primary">Submit</button>
+
+    </form>
+
+    <!-- =================================================================== -->
+    <!-- VALIDATION TABLES ================================================= -->
+    <!-- =================================================================== -->
+    <div class="page-header"><h1>Validation Tables</h1></div>
+
+    <div class="row">
+        <div class="col-xs-3">
+            <h3>Form</h3>
+            <table class="table table-bordered">
+                <tbody>
+                    <tr>
+                        <td ng-class="{ success: userForm.$valid, danger: userForm.$invalid }">Valid</td>
+                    </tr>
+                    <tr>
+                        <td ng-class="{ success: userForm.$pristine, danger: !userForm.$pristine }">Pristine</td>
+                    </tr>
+                    <tr>
+                        <td ng-class="{ success: userForm.$dirty }">Dirty</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="col-xs-3">
+            <h3>From</h3>
+            <table class="table table-bordered">
+                <tbody>
+                    <tr>
+                        <td ng-class="{ success: userForm.from.$valid, danger: userForm.from.$invalid }">Valid</td>
+                    </tr>
+                    <tr>
+                        <td ng-class="{ success: userForm.from.$pristine, danger: !userForm.from.$pristine }">Pristine</td>
+                    </tr>
+                    <tr>
+                        <td ng-class="{ success: userForm.from.$dirty }">Dirty</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+         <div class="col-xs-3">
+            <h3>To</h3>
+            <table class="table table-bordered">
+                <tbody>
+                    <tr>
+                        <td ng-class="{ success: userForm.to.$valid, danger: userForm.to.$invalid }">Valid</td>
+                    </tr>
+                    <tr>
+                        <td ng-class="{ success: userForm.to.$pristine, danger: !userForm.to.$pristine }">Pristine</td>
+                    </tr>
+                    <tr>
+                        <td ng-class="{ success: userForm.to.$dirty }">Dirty</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="col-xs-3">
+            <h3>Subject</h3>
+            <table class="table table-bordered">
+                <tbody>
+                    <tr>
+                        <td ng-class="{ success: userForm.subject.$valid, danger: userForm.subject.$invalid }">Valid</td>
+                    </tr>
+                    <tr>
+                        <td ng-class="{ success: userForm.subject.$pristine, danger: !userForm.subject.$pristine }">Pristine</td>
+                    </tr>
+                    <tr>
+                        <td ng-class="{ success: userForm.subject.$dirty }">Dirty</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+         <div class="col-xs-3">
+            <h3>Body</h3>
+            <table class="table table-bordered">
+                <tbody>
+                    <tr>
+                        <td ng-class="{ success: userForm.body.$valid, danger: userForm.body.$invalid }">Valid</td>
+                    </tr>
+                    <tr>
+                        <td ng-class="{ success: userForm.body.$pristine, danger: !userForm.body.$pristine }">Pristine</td>
+                    </tr>
+                    <tr>
+                        <td ng-class="{ success: userForm.body.$dirty }">Dirty</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+</div>
+</body>
+</html>
